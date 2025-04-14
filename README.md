@@ -8,6 +8,7 @@
 
 ## run frontend
 ```cd frontend/quizbot```
+```npm install```
 ```npm start```
 ___________________________________________________________________
 
@@ -91,7 +92,7 @@ classDiagram
     PointsRepository --> Points
     APIService --> APIRequest
     APIService --> APIResponse: processes
-    APIService --> Flashcard: creates
+    APIService ..> Flashcard: creates
 ```
 
 ## Architecture Diagram
@@ -124,4 +125,6 @@ flowchart TB
     service -->|External API Call| aiml_api
     aiml_api -->|JSON Response| service
 ```
+Testing Concept for QuizBot Application
 
+[-> Testing Concept](Testing_Concept.md)

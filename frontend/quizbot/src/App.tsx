@@ -1,14 +1,19 @@
-
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+//import { ThemeProvider, createTheme } from '@mui/material/styles';
 import './App.css';
-import {useMemo} from "react";
-const theme = useMemo(() => createTheme({}), []);
+import React, {useMemo, useState} from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import {CssBaseline} from "@mui/material";
+//const theme = useMemo(() => createTheme({}), []);
 
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-    </ThemeProvider>
+      <><CssBaseline/><Router>
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+        </Routes>
+      </Router></>
   );
 }
 

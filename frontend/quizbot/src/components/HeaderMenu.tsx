@@ -1,6 +1,13 @@
 import React from 'react';
 
-const HeaderMenu = () => {
+interface HeaderMenuProps {
+    children: React.ReactNode;
+    currentMode: 'light' | 'dark';
+    onToggleTheme: () => void;
+}
+
+
+const HeaderMenu: React.FC<HeaderMenuProps> = ({ children, currentMode, onToggleTheme }) => {
     return (
         <div>
             

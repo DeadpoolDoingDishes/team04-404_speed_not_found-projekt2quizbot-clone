@@ -1,5 +1,5 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Logo from "../assets/logo.png";
 import {
     Box,
     Button,
@@ -12,6 +12,7 @@ import {
     School as SchoolIcon,
 
 } from '@mui/icons-material';
+
 const Home = () => {
     const navigate = useNavigate();
     return (
@@ -25,7 +26,17 @@ const Home = () => {
                     p: 2,
                 }}
             >
-
+                <Box
+                    component="img"     // ← must be the tag name
+                    src={Logo}          // ← your imported URL
+                    alt="QuizBot logo"
+                    sx={{
+                        mr: 2,
+                        width: 100,
+                        height: 100,
+                        objectFit: 'contain',
+                    }}
+                ></Box>
                 <Typography variant="h1" component="h1" gutterBottom align="center" marginBottom={0}>
                     QuizBot
                 </Typography>

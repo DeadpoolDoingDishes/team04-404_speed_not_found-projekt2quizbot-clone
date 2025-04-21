@@ -1,5 +1,5 @@
-//import { ThemeProvider, createTheme } from '@mui/material/styles';
 import './App.css';
+import './index.css';
 import React, {useMemo, useState} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
@@ -21,11 +21,11 @@ function App() {
                     onToggleTheme={() =>
                         setMode((prev) => (prev === 'dark' ? 'light' : 'dark'))
                     }
-                ></HeaderMenu>
-            <HeaderMenu/>
-            <Routes>
-                <Route path="/" element={<Home />} />
-            </Routes>
+                >
+                    <Routes>
+                        <Route path="/"        element={<Home />} />
+                    </Routes>
+                </HeaderMenu>
             </Router>
         </ThemeProvider>
   );

@@ -10,7 +10,7 @@ const commonTypography: ThemeOptions['typography'] = {
         'Arial',
         'sans-serif',
     ].join(','),
-    // only the h1 override—everything else inherits fontFamily above
+
     h1: {
         fontFamily: '"Fascinate Inline", cursive',
         fontSize: '4rem',

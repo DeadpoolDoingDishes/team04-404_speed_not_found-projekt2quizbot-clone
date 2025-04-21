@@ -3,6 +3,7 @@ import './App.css';
 import React, {useMemo, useState} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
+import HeaderMenu from './components/HeaderMenu';
 import {CssBaseline} from "@mui/material";
 //const theme = useMemo(() => createTheme({}), []);
 
@@ -10,6 +11,7 @@ import {CssBaseline} from "@mui/material";
 function App() {
   return (
       <><CssBaseline/><Router>
+          <HeaderMenu></HeaderMenu>
         <Routes>
           <Route path="/" element={<Home/>}/>
         </Routes>

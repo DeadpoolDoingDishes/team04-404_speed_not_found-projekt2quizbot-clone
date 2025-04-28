@@ -42,6 +42,13 @@ const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
                 },
             },
         },
+        MuiPaper: {
+            styleOverrides: {
+                root: ({ theme }) => ({
+                    backgroundColor: theme.palette.mode === 'dark' ? '#121212' : '#ffffff',
+                }),
+            },
+        },
     },
 });
 

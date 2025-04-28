@@ -23,15 +23,25 @@ public class FlashcardController {
 
     @PostMapping("/generate")
     public ResponseEntity<List<Flashcard>> generateFlashcards(@RequestBody Map<String, Object> request) {
+        String topic = (String) request.get("topic");
+        String language = (String) request.get("language");
+        int count = ((Number) request.get("count")).intValue();
 
+        List<Flashcard> flashcards = flashcardService.generateFlashcards(topic, language, count);
+        return ResponseEntity.ok(flashcards);
     }
 
     @GetMapping
     public ResponseEntity<List<Flashcard>> getAllFlashcards() {
+        List<Flashcard> flashcards = flashcardService.getAllFlashcards();
+        return ResponseEntity.ok(flashcards);
     }
 
     @PostMapping("/mark")
     public ResponseEntity<Void> markFlashcard(@RequestBody Map<String, Object> request) {
-
+        String id = (String) request.get("id");
+        boolean isCorrect = (Boolean) request.get("isCorrect");
+        flashcardService.markFlashcard(id, isCorrect);
+        return ResponseEntity.ok().build();
     }
 }

@@ -13,7 +13,6 @@ import {
   Typography,
   SelectChangeEvent,
 } from '@mui/material';
-import axios from 'axios';
 
 interface FlashcardData {
   id: string;
@@ -36,12 +35,24 @@ const Generate = () => {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:8080/api/flashcards/generate', {
-        topic,
-        language,
-        count,
+      const response = await fetch('http://localhost:8080/api/flashcards/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          topic,
+          language,
+          count,
+        }),
       });
-      setFlashcards(response.data);
+
+      if (!response.ok) {
+        throw new Error('Failed to generate flashcards');
+      }
+
+      const data: FlashcardData[] = await response.json();
+      setFlashcards(data);
     } catch (err) {
       setError('Failed to generate flashcards. Please try again.');
       console.error('Error:', err);
@@ -49,6 +60,7 @@ const Generate = () => {
       setLoading(false);
     }
   };
+
 
   const handleLanguageChange = (e: SelectChangeEvent) => {
     setLanguage(e.target.value);

@@ -10,7 +10,6 @@ import {
 import {
   Refresh as RefreshIcon,
 } from '@mui/icons-material';
-import axios from 'axios';
 
 interface FlashcardData {
   id: string;
@@ -33,8 +32,12 @@ const Practice = () => {
 
   const fetchFlashcards = async () => {
     try {
-      const response = await axios.get<FlashcardData[]>('http://localhost:8080/api/flashcards');
-      setFlashcards(response.data);
+      const response = await fetch('http://localhost:8080/api/flashcards');
+      if (!response.ok) {
+        throw new Error('Failed to load flashcards');
+      }
+      const data: FlashcardData[] = await response.json();
+      setFlashcards(data);
     } catch (err) {
       setError('Failed to load flashcards. Please try again.');
       console.error('Error:', err);
@@ -43,14 +46,20 @@ const Practice = () => {
     }
   };
 
+
   const fetchPoints = async () => {
     try {
-      const response = await axios.get<PointsResponse>('http://localhost:8080/api/points');
-      setPoints(response.data.points);
+      const response = await fetch('http://localhost:8080/api/points');
+      if (!response.ok) {
+        throw new Error('Failed to fetch points');
+      }
+      const data: PointsResponse = await response.json();
+      setPoints(data.points);
     } catch (err) {
       console.error('Error fetching points:', err);
     }
   };
+
 
   useEffect(() => {
     fetchFlashcards();
@@ -60,9 +69,15 @@ const Practice = () => {
   const handleAnswer = async (isCorrect: boolean) => {
     if (currentFlashcard) {
       try {
-        await axios.post('http://localhost:8080/api/flashcards/mark', {
-          id: currentFlashcard.id,
-          isCorrect,
+        await fetch('http://localhost:8080/api/flashcards/mark', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: currentFlashcard.id,
+            isCorrect,
+          }),
         });
         await fetchPoints();
         nextCard();
@@ -71,6 +86,7 @@ const Practice = () => {
       }
     }
   };
+
 
   const nextCard = () => {
     setShowAnswer(false);

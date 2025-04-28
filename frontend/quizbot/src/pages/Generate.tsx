@@ -83,6 +83,7 @@ const Generate = () => {
             value={topic}
             onChange={(e) => setTopic(e.target.value)}
             required
+            slotProps={{ htmlInput: {maxLength: 50}}}
           />
           <Box sx={{ 
             display: 'flex', 

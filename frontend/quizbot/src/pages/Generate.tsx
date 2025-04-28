@@ -31,8 +31,13 @@ const Generate = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     setError('');
+
+    if (topic.trim() === '') {
+        setError('Please enter a topic.');
+        return;
+    }
+    setLoading(true);
 
     try {
       const response = await fetch('http://localhost:8080/api/flashcards/generate', {

@@ -3,6 +3,8 @@ import './index.css';
 import React, {useMemo, useState} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
+import Generate from './pages/Generate';
+import Practice from './pages/Practice';
 import HeaderMenu from './components/HeaderMenu';
 
 import { makeAppTheme } from './theme/Theme';
@@ -24,6 +26,8 @@ function App() {
                 >
                     <Routes>
                         <Route path="/"        element={<Home />} />
+                        <Route path="/generate"        element={<Generate />} />
+                        <Route path="/practice"        element={<Practice />} />
                     </Routes>
                 </HeaderMenu>
             </Router>

@@ -17,8 +17,17 @@ public class PointsService {
     }
 
     public Points getPoints() {
+        List<Points> pointsList = repository.findAll();
+        if (pointsList.isEmpty()) {
+            Points points = new Points();
+            return repository.save(points);
+        }
+        return pointsList.get(0);
     }
 
     public Points addPoints(int pointsToAdd) {
+        Points points = getPoints();
+        points.addPoints(pointsToAdd);
+        return repository.save(points);
     }
 }

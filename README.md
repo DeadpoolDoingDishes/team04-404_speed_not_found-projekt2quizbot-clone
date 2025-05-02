@@ -17,81 +17,60 @@ ___________________________________________________________________
 ## Class Diagram
 ```mermaid
 classDiagram
+
     class FlashcardController {
         -flashcardService
-        +generateFlashcards()
-        +getAllFlashcards()
-        +markFlashcard()
-    }
-    class PointsController {
-        -pointsService
-        +getPoints()
-        +addPoints()
+        +generateFlashcards() ResponseEntity<List<Flashcard>>
+        +getAllFlashcards() ResponseEntity<List<Flashcard>>
+        +markFlashcard() ResponseEntity<Void>
+        +getPoints() ResponseEntity<Map<String, Integer>>
+        +resetFlashcards() ResponseEntity<List<Flashcard>>
     }
     class FlashcardService {
-        -repository
-        -apiService
-        -pointsService
-        +generateFlashcards()
-        +getAllFlashcards()
+        -repository FlashcardRepository
+        -apiService APIService
+        +generateAndSaveFlashcards() List<Flashcard>
+        +getAllFlashcards() List<Flashcard>
         +markFlashcard()
+        +calculatePoints() int
+        +resetAllFlashcards() List<Flashcard>
     }
-    class PointsService {
-        -repository
-        +getPoints()
-        +addPoints()
-    }
+
     class APIService {
-        -apiKey
-        -httpClient
-        +generateFlashcards()
+        -__LOGGER__: Logger <<final>>
+        -__AIML_CHAT_COMPLETIONS_URL__: string <<final>>
+        -__CONTENT__: string <<final>>
+        -apiKey string 
+        -httpClient <<final>>
+        +generateFlashcards() List<Flashcard>
+        -createApiRequest() Request
+        -extractFlashcardsFromResponse() List<Flashcard>
+        -extractJsonArray() string
+        -getLanguageName() string
     }
-    class APIRequest {
-        -url
-        -headers
-        -body
-        +buildRequest()
-        +execute()
-    }
-    class APIResponse {
-        -statusCode
-        -responseBody
-        +parseContent()
-        +isSuccessful()
-    }
+
     class Flashcard {
-        -id
-        -question
-        -answer
-        -isCorrect
-        +getQuestion()
-        +getAnswer()
-        +isCorrect()
+        -id String
+        -question String
+        -answer String
+        -isCorrect boolean
+        +getId() String
+        +getQuestion() String
+        +getAnswer() String
+        +isCorrect() boolean
+        +setId()
         +setCorrect()
+        +toString() String
     }
-    class Points {
-        -id
-        -points
-        +getPoints()
-        +setPoints()
-        +addPoints()
-    }
+
     class FlashcardRepository {
         <<interface>>
     }
-    class PointsRepository {
-        <<interface>>
-    }
+
     FlashcardController --> FlashcardService
-    PointsController --> PointsService
     FlashcardService --> FlashcardRepository
     FlashcardService --> APIService: uses
-    FlashcardService --> PointsService: uses
-    PointsService --> PointsRepository
     FlashcardRepository --> Flashcard
-    PointsRepository --> Points
-    APIService --> APIRequest
-    APIService --> APIResponse: processes
     APIService ..> Flashcard: creates
 ```
 
@@ -106,10 +85,10 @@ flowchart TB
     subgraph "Server Side"
         subgraph "Spring Boot Application: localhost:8080"
             controller["Controllers:<br>FlashcardController<br>PointsController"]
-            service["Services<br>FlashcardService<br>PointsService<br>APIService"]
-            repository["Repositories:<br>FlashcardRepository<br>PointsRepository"]
-            config["Configuration:<br>ConfigLoader<br>WebConfig"]
-            models["Models<br>Flashcard<br>Points"]
+            service["Services<br>FlashcardService<br>APIService"]
+            repository["Repositories:<br>FlashcardRepository"]
+            config["Configuration:<br>WebConfig"]
+            models["Models<br>Flashcard"]
             db[(Database:<br>h2-console)]
         end
 

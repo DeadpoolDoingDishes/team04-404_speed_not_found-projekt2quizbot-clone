@@ -35,6 +35,29 @@ The user interface is designed to be intuitive and user-friendly. Users can easi
 1. **Generate Flashcards**: Enter a topic, enter the amount of flashcards you want to generate, and click the "Generate" button. The application will fetch flashcards from the AI service and display them.
 2. **Practice Flashcards**: The generated flashcards will be displayed one by one. Users can mark them as correct or incorrect based on their knowledge. Correct answers will earn points.
 
+## Use cases
+- **Student Learning**: Students can use QuizBot to study for exams by generating flashcards on specific subjects.
+- **Language Learning**: Language learners can create flashcards for vocabulary and grammar rules.
+- **General Knowledge**: Users can explore various topics and test their knowledge through flashcards.
+- **Quiz Preparation**: QuizBot can be used to prepare for quizzes and tests by generating relevant flashcards.
+- **Interactive Learning**: The application promotes interactive learning by allowing users to engage with the content actively.
+- **Quiz Creation**: Users can create custom quizzes by generating flashcards on specific topics.
+
+## Technologies Used
+- **Backend**: Spring Boot, Java 21
+- **Frontend**: React, TypeScript
+- **Database**: H2 (in-memory database for development)
+- **AI Service**: External API for flashcard generation [AI/ML API](https://aimlapi.com/)
+- **Build Tool**: Gradle
+- **Version Control**: Git
+- **Testing**: JUnit, Mockito
+
+## Branching Strategy
+The project follows a branching strategy to differentiate between frontend and backend development. Each developer works on their own branch, the development branch is used for integration, and the main branch is reserved for stable releases. The following branches are used:
+- **main**: The main branch contains the stable version of the application.
+- **development**: The development branch is used for ongoing development and integration of new features.
+- **frontend/<developer_name>**: Each frontend developer has their own branch for implementing frontend features.
+- **backend/<developer_name>**: Each backend developer has their own branch for implementing backend features.
 ___________________________________________________________________
 
 # UML Diagrams

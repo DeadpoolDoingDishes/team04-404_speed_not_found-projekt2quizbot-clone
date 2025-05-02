@@ -1,5 +1,22 @@
 # team04-404_speed_not_found-projekt2quizbot
-
+- [Running the application locally](#running-the-application-locally)
+- [QuizBot](#quizbot)
+  - [Welcome to QuizBot!](#welcome-to-quizbot)
+  - [Flashcard Generation](#flashcard-generation)
+  - [Points System](#points-system)
+  - [User Interface](#user-interface)
+  - [Usage](#usage)
+  - [Use cases](#use-cases)
+  - [Technologies Used](#technologies-used)
+  - [Branching Strategy](#branching-strategy)
+- [UML Diagrams](#uml-diagrams)
+  - [Class Diagram](#class-diagram)
+  - [Architecture Diagram](#architecture-diagram)
+- [Testing](#testing)
+  - [Backend Testing](#backend-testing)
+  - [Frontend Testing](#frontend-testing)
+  - [Running Tests](#running-tests) TODO
+- [Mentionable Pull Requests](#mentionable-pull-requests)
 ___________________________________________________________________
 
 # Running the application locally

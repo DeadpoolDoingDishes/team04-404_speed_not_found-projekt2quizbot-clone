@@ -1,4 +1,9 @@
+<div style="overflow: auto;">
+
+<div style="float: left; width: 65%;">
+
 # team04-404_speed_not_found-projekt2quizbot
+
 - [Running the application locally](#running-the-application-locally)
 - [QuizBot](#quizbot)
   - [Welcome to QuizBot!](#welcome-to-quizbot)
@@ -17,6 +22,17 @@
   - [Frontend Testing](#frontend-testing)
   - [Running Tests](#running-tests) TODO
 - [Mentionable Pull Requests](#mentionable-pull-requests)
+
+</div>
+
+<div style="float: right; width: 30%; text-align: center; margin-top: 40px;">
+
+<img src="frontend/quizbot/src/assets/logo.png" alt="drawing" height="150"/>
+
+</div>
+
+</div>
+
 ___________________________________________________________________
 
 # Running the application locally

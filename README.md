@@ -18,6 +18,25 @@ ___________________________________________________________________
 ```http://localhost:3000```
 ___________________________________________________________________
 
+# QuizBot
+## Welcome to QuizBot!
+QuizBot is an interactive learning tool designed to help users learn and retain information through flashcards. The application leverages AI technology to generate flashcards based on user input, making the learning process more efficient and engaging.
+
+## Flashcard Generation
+Users can generate flashcards by providing a topic. The application uses an external AI service to create flashcards that include questions and answers. Users can then review these flashcards to enhance their learning experience.
+
+## Points System
+QuizBot includes a points system that rewards users for correctly answering flashcard questions. Users can track their progress and see how many points they have accumulated during their learning sessions. The points system encourages users to engage with the flashcards and reinforces their learning.
+
+## User Interface
+The user interface is designed to be intuitive and user-friendly. Users can easily navigate through the application, generate flashcards, and track their points. The frontend is built using React, providing a responsive and dynamic experience.
+
+## Usage
+1. **Generate Flashcards**: Enter a topic, enter the amount of flashcards you want to generate, and click the "Generate" button. The application will fetch flashcards from the AI service and display them.
+2. **Practice Flashcards**: The generated flashcards will be displayed one by one. Users can mark them as correct or incorrect based on their knowledge. Correct answers will earn points.
+
+___________________________________________________________________
+
 # UML Diagrams
 
 ## Class Diagram

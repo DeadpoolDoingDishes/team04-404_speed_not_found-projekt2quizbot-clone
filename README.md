@@ -152,6 +152,12 @@ flowchart TB
     service -->|External API Call| aiml_api
     aiml_api -->|JSON Response| service
 ```
-Testing Concept for QuizBot Application
+___________________________________________________________________
+# Testing
+## Backend Testing
+Automated tests are provided for the backend using JUnit and Mockito. The test cases are defined in the [Testing Concept](Testing_Concept.md) document.
+## Frontend Testing
+The frontend will be testend manually using the test cases provided in the [Testing Concept](Testing_Concept.md) document.
 
-[-> Testing Concept](Testing_Concept.md)
+## Running Tests
+TODO

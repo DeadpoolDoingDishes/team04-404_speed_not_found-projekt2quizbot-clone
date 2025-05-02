@@ -161,3 +161,7 @@ The frontend will be testend manually using the test cases provided in the [Test
 
 ## Running Tests
 TODO
+___________________________________________________________________
+# Mentionable Pull Requests
+- Backend: ConfigLoader, FlashcardController, APIService Implementation [#32](https://github.zhaw.ch/PM2-IT24taZH-meea-lieh-kars/team04-404_speed_not_found-projekt2quizbot/pull/32)
+- Backend: WebConfig, FlashcardService, PointsService Implementation [#34](https://github.zhaw.ch/PM2-IT24taZH-meea-lieh-kars/team04-404_speed_not_found-projekt2quizbot/pull/34)

@@ -1,5 +1,8 @@
 # team04-404_speed_not_found-projekt2quizbot
 
+___________________________________________________________________
+
+# Running the application locally
 ## run backend
 ```cd backend/```
 ```gradle wrapper```
@@ -10,6 +13,9 @@
 ```cd frontend/quizbot```
 ```npm install```
 ```npm start```
+
+## open in browser
+```http://localhost:3000```
 ___________________________________________________________________
 
 # UML Diagrams

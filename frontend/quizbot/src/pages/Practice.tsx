@@ -9,7 +9,10 @@ import {
 } from '@mui/material';
 import {
   Refresh as RefreshIcon,
+  Add as AddIcon,
 } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 interface FlashcardData {
   id: string;
@@ -18,88 +21,95 @@ interface FlashcardData {
   isCorrect: boolean;
 }
 
-interface PointsResponse {
-  points: number;
-}
-
-const Practice = () => {
+const Practice: React.FC = () => {
   const [flashcards, setFlashcards] = useState<FlashcardData[]>([]);
+  const [allFlashcards, setAllFlashcards] = useState<FlashcardData[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [points, setPoints] = useState(0);
+  const navigate = useNavigate();
 
-  const fetchFlashcards = async () => {
+  const fetchAllFlashcards = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/flashcards');
-      if (!response.ok) {
-        throw new Error('Failed to load flashcards');
-      }
-      const data: FlashcardData[] = await response.json();
-      setFlashcards(data);
+      const response = await axios.get<FlashcardData[]>('http://localhost:8080/api/flashcards');
+      setAllFlashcards(response.data);
     } catch (err) {
-      setError('Failed to load flashcards. Please try again.');
-      console.error('Error:', err);
-    } finally {
+      console.error('Error fetching all flashcards:', err);
+    }
+finally {
       setLoading(false);
     }
   };
 
 
-  const fetchPoints = async () => {
-    try {
-      const response = await fetch('http://localhost:8080/api/points');
-      if (!response.ok) {
-        throw new Error('Failed to fetch points');
-      }
-      const data: PointsResponse = await response.json();
-      setPoints(data.points);
-    } catch (err) {
-      console.error('Error fetching points:', err);
-    }
-  };
-
 
   useEffect(() => {
-    fetchFlashcards();
-    fetchPoints();
+    const fetchData = async () => {
+      setLoading(true);
+      await fetchAllFlashcards();
+
+    };
+
+    fetchData();
   }, []);
 
   const handleAnswer = async (isCorrect: boolean) => {
     if (currentFlashcard) {
       try {
-        await fetch('http://localhost:8080/api/flashcards/mark', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            id: currentFlashcard.id,
-            isCorrect,
-          }),
+        await axios.post('http://localhost:8080/api/flashcards/mark', {
+          id: currentFlashcard.id,
+          isCorrect,
         });
-        await fetchPoints();
-        nextCard();
+
+        // Update the allFlashcards array
+        setAllFlashcards(prev =>
+          prev.map(card =>
+            card.id === currentFlashcard.id
+              ? {...card, isCorrect}
+              : card
+          )
+        );
+
+        // Remove the answered flashcard from unpracticed cards
+        setFlashcards(prev => prev.filter(card => card.id !== currentFlashcard.id));
+
+        // Reset to first card if we removed the last card
+        setCurrentIndex(0);
+        setShowAnswer(false);
       } catch (err) {
         console.error('Error marking flashcard:', err);
       }
     }
   };
 
+  const resetPractice = async () => {
+    setLoading(true);
+    try {
+      // Call the reset endpoint
+      await axios.post('http://localhost:8080/api/flashcards/reset');
 
-  const nextCard = () => {
-    setShowAnswer(false);
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
-  };
+      // Fetch all flashcards again
+      await fetchAllFlashcards();
+      const response = await axios.get<FlashcardData[]>('http://localhost:8080/api/flashcards');
+      setFlashcards(response.data);
 
-  const resetPractice = () => {
-    setCurrentIndex(0);
-    setShowAnswer(false);
-    fetchFlashcards();
+      // Reset local state
+      setCurrentIndex(0);
+      setShowAnswer(false);
+    } catch (err) {
+      console.error('Error resetting flashcards:', err);
+      setError('Failed to reset flashcards. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const currentFlashcard = flashcards[currentIndex];
+
+  // Calculate the correct counts
+  const correctCount = allFlashcards.filter(card => card.isCorrect).length;
+  const totalCount = allFlashcards.length;
 
   if (loading) {
     return (
@@ -113,14 +123,6 @@ const Practice = () => {
     return (
       <Box sx={{ mt: 4 }}>
         <Typography color="error">{error}</Typography>
-        <Button
-          variant="contained"
-          onClick={fetchFlashcards}
-          startIcon={<RefreshIcon />}
-          sx={{ mt: 2 }}
-        >
-          Retry
-        </Button>
       </Box>
     );
   }
@@ -129,27 +131,44 @@ const Practice = () => {
     return (
       <Box sx={{ mt: 4, textAlign: 'center' }}>
         <Typography variant="h5" gutterBottom>
-          No flashcards available
+          No more cards to practice!
         </Typography>
         <Typography color="text.secondary" gutterBottom>
-          Generate some flashcards first to start practicing
+          You've completed all available flashcards. Great job!
         </Typography>
-        <Button
-          variant="contained"
-          onClick={fetchFlashcards}
-          startIcon={<RefreshIcon />}
-          sx={{ mt: 2 }}
-        >
-          Refresh
-        </Button>
+        <Typography variant="h6" sx={{ mt: 2 }}>
+          Correct: {correctCount}/{totalCount}
+        </Typography>
+        <Box sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', sm: 'row' },
+          gap: 2,
+          justifyContent: 'center',
+          mt: 4
+        }}>
+          <Button
+            variant="contained"
+            onClick={() => navigate('/generate')}
+            startIcon={<AddIcon />}
+          >
+            Generate New Flashcards
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={resetPractice}
+            startIcon={<RefreshIcon />}
+          >
+            Reset All Cards
+          </Button>
+        </Box>
       </Box>
     );
   }
 
   return (
     <Box>
-      <Box sx={{ 
-        display: 'flex', 
+      <Box sx={{
+        display: 'flex',
         flexDirection: 'column',
         gap: 2,
         mb: 4
@@ -158,10 +177,13 @@ const Practice = () => {
           Practice Mode
         </Typography>
         <Typography variant="h6">
-          Points: {points}
+          Correct: {correctCount}/{totalCount}
+        </Typography>
+        <Typography color="text.secondary">
+          Cards remaining: {flashcards.length}
         </Typography>
       </Box>
-      
+
       <Card sx={{ mb: 4 }}>
         <CardContent>
           <Typography variant="h5" gutterBottom>
@@ -175,8 +197,8 @@ const Practice = () => {
         </CardContent>
       </Card>
 
-      <Box sx={{ 
-        display: 'flex', 
+      <Box sx={{
+        display: 'flex',
         flexDirection: 'column',
         gap: 2,
         mt: 2
@@ -190,8 +212,8 @@ const Practice = () => {
             Show Answer
           </Button>
         ) : (
-          <Box sx={{ 
-            display: 'flex', 
+          <Box sx={{
+            display: 'flex',
             gap: 2
           }}>
             <Button
@@ -217,11 +239,11 @@ const Practice = () => {
           fullWidth
           onClick={resetPractice}
         >
-          Reset Practice
+          Reset All Cards
         </Button>
       </Box>
     </Box>
   );
 };
 
-export default Practice; 
+export default Practice;

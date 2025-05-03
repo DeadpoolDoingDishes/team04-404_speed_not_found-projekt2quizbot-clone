@@ -11,7 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/flashcards")
-@CrossOrigin(origins = "http://localhost:3000")
+
 public class FlashcardController {
 
     private final FlashcardService flashcardService;
@@ -22,7 +22,7 @@ public class FlashcardController {
     }
 
     @PostMapping("/generate")
-    public ResponseEntity<List<Flashcard>> generateFlashcards(@RequestBody Map<String, Object> request) {
+    public ResponseEntity<List<Flashcard>> generateAndSaveFlashcards(@RequestBody Map<String, Object> request) {
         String topic = (String) request.get("topic");
         String language = (String) request.get("language");
         int count = ((Number) request.get("count")).intValue();
@@ -43,5 +43,26 @@ public class FlashcardController {
         boolean isCorrect = (Boolean) request.get("isCorrect");
         flashcardService.markFlashcard(id, isCorrect);
         return ResponseEntity.ok().build();
+    }
+    /**
+     * Recalculates the points for all flashcards.
+     *
+     * @return a confirmation message as HTTP response
+     */
+    @GetMapping("/point")
+    public ResponseEntity<String> calculatePoints() {
+        flashcardService.calculatePoints();
+        return ResponseEntity.ok("Points have been recalculated.");
+    }
+
+    /**
+     * Resets all flashcards to their initial state.
+     *
+     * @return a confirmation message as HTTP response
+     */
+    @PostMapping("/reset")
+    public ResponseEntity<String> resetAllFlashcards() {
+        flashcardService.resetAllFlashcards();
+        return ResponseEntity.ok("All flashcards have been reset.");
     }
 }

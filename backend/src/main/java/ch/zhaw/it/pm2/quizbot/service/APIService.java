@@ -4,18 +4,16 @@ import ch.zhaw.it.pm2.quizbot.model.Flashcard;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.ArrayList;
-import java.util.logging.Logger;
 
 @Service
-public class AIMLService {
+public class APIService {
 
     @Value("${aiml.api.key}")
     private String apiKey;
 
     private final OkHttpClient httpClient;
 
-    public AIMLService() {
+    public APIService() {
         this.httpClient = new OkHttpClient();
     }
 

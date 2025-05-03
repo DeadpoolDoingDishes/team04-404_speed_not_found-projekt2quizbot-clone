@@ -9,18 +9,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * REST controller that provides endpoints for managing flashcards,
+ * including generation, retrieval, marking correctness, and resetting state.
+ */
 @RestController
 @RequestMapping("/api/flashcards")
-
 public class FlashcardController {
-
     private final FlashcardService flashcardService;
 
+    /**
+     * Constructs the FlashcardController with a FlashcardService dependency.
+     *
+     * @param flashcardService the service used to manage flashcards
+     */
     @Autowired
     public FlashcardController(FlashcardService flashcardService) {
         this.flashcardService = flashcardService;
     }
 
+    /**
+     * Generates and saves a list of flashcards based on topic, language and count.
+     *
+     * @param request a map containing keys "topic", "language", and "count"
+     * @return a list of generated flashcards
+     */
     @PostMapping("/generate")
     public ResponseEntity<List<Flashcard>> generateAndSaveFlashcards(@RequestBody Map<String, Object> request) {
         String topic = (String) request.get("topic");
@@ -31,12 +44,23 @@ public class FlashcardController {
         return ResponseEntity.ok(flashcards);
     }
 
+    /**
+     * Retrieves all stored flashcards.
+     *
+     * @return a list of all flashcards
+     */
     @GetMapping
     public ResponseEntity<List<Flashcard>> getAllFlashcards() {
         List<Flashcard> flashcards = flashcardService.getAllFlashcards();
         return ResponseEntity.ok(flashcards);
     }
 
+    /**
+     * Marks a flashcard as correct or incorrect.
+     *
+     * @param request a map containing keys "id" and "isCorrect"
+     * @return an empty HTTP 200 OK response
+     */
     @PostMapping("/mark")
     public ResponseEntity<Void> markFlashcard(@RequestBody Map<String, Object> request) {
         String id = (String) request.get("id");
@@ -44,6 +68,7 @@ public class FlashcardController {
         flashcardService.markFlashcard(id, isCorrect);
         return ResponseEntity.ok().build();
     }
+
     /**
      * Recalculates the points for all flashcards.
      *

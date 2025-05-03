@@ -23,7 +23,6 @@ interface FlashcardData {
 
 const Practice: React.FC = () => {
   const [flashcards, setFlashcards] = useState<FlashcardData[]>([]);
-  const [allFlashcards, setAllFlashcards] = useState<FlashcardData[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -33,7 +32,7 @@ const Practice: React.FC = () => {
   const fetchAllFlashcards = async () => {
     try {
       const response = await axios.get<FlashcardData[]>('http://localhost:8080/api/flashcards');
-      setAllFlashcards(response.data);
+      setFlashcards(response.data);
     } catch (err) {
       console.error('Error fetching all flashcards:', err);
     }
@@ -63,7 +62,7 @@ finally {
         });
 
         // Update the allFlashcards array
-        setAllFlashcards(prev =>
+        setFlashcards(prev =>
           prev.map(card =>
             card.id === currentFlashcard.id
               ? {...card, isCorrect}
@@ -108,8 +107,8 @@ finally {
   const currentFlashcard = flashcards[currentIndex];
 
   // Calculate the correct counts
-  const correctCount = allFlashcards.filter(card => card.isCorrect).length;
-  const totalCount = allFlashcards.length;
+  const correctCount = flashcards.filter(card => card.isCorrect).length;
+  const totalCount = flashcards.length;
 
   if (loading) {
     return (

@@ -14,13 +14,13 @@ import java.util.Optional;
 @Service
 public class FlashcardService {
     private final FlashcardRepository repository;
-    private final AIMLService aimlService;
+    private final APIService apiService;
 
 
     @Autowired
-    public FlashcardService(FlashcardRepository repository, AIMLService aimlService) {
+    public FlashcardService(FlashcardRepository repository, APIService apiService) {
         this.repository = repository;
-        this.aimlService = aimlService;
+        this.apiService = apiService;
 
     }
 
@@ -33,7 +33,7 @@ public class FlashcardService {
      * @return a list of saved flashcards
      */
     public List<Flashcard> generateAndSaveFlashcards(String topic, String language, int count) {
-        List<Flashcard> flashcards = aimlService.generateFlashcards(topic, language, count);
+        List<Flashcard> flashcards = apiService.generateFlashcards(topic, language, count);
         return repository.saveAll(flashcards);
     }
 

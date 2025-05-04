@@ -40,7 +40,7 @@ public class FlashcardController {
         String language = (String) request.get("language");
         int count = ((Number) request.get("count")).intValue();
 
-        List<Flashcard> flashcards = flashcardService.generateFlashcards(topic, language, count);
+        List<Flashcard> flashcards = flashcardService.generateAndSaveFlashcards(topic, language, count);
         return ResponseEntity.ok(flashcards);
     }
 

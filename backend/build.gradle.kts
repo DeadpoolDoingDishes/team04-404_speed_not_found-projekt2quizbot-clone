@@ -23,9 +23,14 @@ repositories {
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	// OkHttp (HTTP client)
+	implementation("com.squareup.okhttp3:okhttp:4.12.0")
+	// org.json (JSON library)
+	implementation("org.json:json:20240303")
 }
 node {
 	version.set("16.14.0")

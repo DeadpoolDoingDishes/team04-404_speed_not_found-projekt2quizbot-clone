@@ -2,9 +2,14 @@ package ch.zhaw.it.pm2.quizbot.service;
 
 import ch.zhaw.it.pm2.quizbot.model.Flashcard;
 
+import okhttp3.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**

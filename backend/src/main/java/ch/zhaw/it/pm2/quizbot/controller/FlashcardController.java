@@ -70,17 +70,6 @@ public class FlashcardController {
     }
 
     /**
-     * Recalculates the points for all flashcards.
-     *
-     * @return a confirmation message as HTTP response
-     */
-    @GetMapping("/point")
-    public ResponseEntity<String> calculatePoints() {
-        flashcardService.calculatePoints();
-        return ResponseEntity.ok("Points have been recalculated.");
-    }
-
-    /**
      * Resets all flashcards to their initial state.
      *
      * @return a confirmation message as HTTP response

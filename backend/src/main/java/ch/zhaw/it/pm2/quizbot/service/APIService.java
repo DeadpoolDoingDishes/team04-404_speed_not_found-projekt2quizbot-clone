@@ -16,6 +16,8 @@ public class APIService {
     private static final String AIML_CHAT_COMPLETIONS_URL = "https://api.aimlapi.com/v1/chat/completions";
     private static final String CONTENT = "content";
 
+
+
     @Value("${aiml.api.key}")
     private String apiKey;
 
@@ -169,6 +171,7 @@ public class APIService {
 
         return content;
     }
+
 
 }
 

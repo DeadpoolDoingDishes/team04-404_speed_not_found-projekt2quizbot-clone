@@ -62,7 +62,6 @@ class FlashcardServiceTest {
         assertEquals(3, result.size());
 
     }
-
     //testing saving an empty list of flashcards
     @Test
     void generateAndSaveFlashcards_EmptyResult() {
@@ -87,7 +86,6 @@ class FlashcardServiceTest {
         assertTrue(result.isEmpty());
 
     }
-
     // testing the getAllFlashcards method of our flashcard service class
     @Test
     void getAllFlashcards_Success() {
@@ -128,5 +126,46 @@ class FlashcardServiceTest {
 
         // Assert
         assertTrue(flashcard.isCorrect());
+    }
+
+    @Test
+    void markFlashcard_Incorrect() {
+        // Arrange
+        String flashcardId = "test-id";
+        Flashcard flashcard = new Flashcard("Question", "Answer");
+        flashcard.setId(flashcardId);
+
+        when(flashcardRepository.findById(flashcardId))
+                .thenReturn(Optional.of(flashcard));
+
+        // Act
+        flashcardService.markFlashcard(flashcardId, false);
+
+        // Assert
+        verify(flashcardRepository).findById(flashcardId);
+        verify(flashcardRepository).save(flashcard);
+        assertFalse(flashcard.isCorrect());
+    }
+    //Edgecase:
+    // test if the markFlashcard method handles the case when the flashcard is not found correct
+    // by not calling the save method and not adding points
+
+    @Test
+    void markFlashcard_NotFound() {
+        // Arrange
+        String flashcardId = "non-existent-id";
+
+        when(flashcardRepository.findById(flashcardId))
+                .thenReturn(Optional.empty());
+
+        // Act
+        flashcardService.markFlashcard(flashcardId, true);
+
+        // Assert
+        verify(flashcardRepository).findById(flashcardId);
+        //make sure findById returns empty
+        assertTrue(flashcardRepository.findById(flashcardId).isEmpty());
+        //make sure save is never called
+        verify(flashcardRepository, never()).save(any(Flashcard.class));
     }
 }

@@ -168,4 +168,74 @@ class FlashcardServiceTest {
         //make sure save is never called
         verify(flashcardRepository, never()).save(any(Flashcard.class));
     }
+    //tests the calculatePoints method for a correct result
+    @Test
+    void calculatePoints_ShouldReturnCorrectCount() {
+        // Arrange
+        List<Flashcard> flashcards = Arrays.asList(
+                createFlashcard("1", "Q1", "A1", true),
+                createFlashcard("2", "Q2", "A2", false),
+                createFlashcard("3", "Q3", "A3", true)
+        );
+
+        when(flashcardRepository.findAll()).thenReturn(flashcards);
+
+        // Act
+        int points = flashcardService.calculatePoints();
+
+        // Assert
+        assertEquals(2, points);
+        verify(flashcardRepository).findAll();
+    }
+    // testing the getUnpracticedFlashcards method of our flashcard service class
+    @Test
+    void getUnpracticedFlashcards_ShouldReturnOnlyUnpracticedCards() {
+        // Arrange
+        List<Flashcard> allFlashcards = Arrays.asList(
+                createFlashcard("1", "Q1", "A1", true),
+                createFlashcard("2", "Q2", "A2", false),
+                createFlashcard("3", "Q3", "A3", false),
+                createFlashcard("4", "Q4", "A4", true)
+        );
+
+        when(flashcardRepository.findAll()).thenReturn(allFlashcards);
+
+        // Act
+        List<Flashcard> result = flashcardService.getUnpracticedFlashcards();
+
+        // Assert
+        assertEquals(2, result.size());
+        assertEquals("Q2", result.get(0).getQuestion());
+        assertEquals("Q3", result.get(1).getQuestion());
+        verify(flashcardRepository).findAll();
+    }
+    // testing the resetAllFlashcards method of our flashcard service class
+    @Test
+    void resetAllFlashcards_ShouldResetAllCards() {
+        // Arrange
+        List<Flashcard> flashcards = Arrays.asList(
+                createFlashcard("1", "Q1", "A1", true),
+                createFlashcard("2", "Q2", "A2", true)
+        );
+
+        when(flashcardRepository.findAll()).thenReturn(flashcards);
+        when(flashcardRepository.saveAll(anyList())).thenReturn(flashcards);
+
+        // Act
+        List<Flashcard> result = flashcardService.resetAllFlashcards();
+
+        // Assert
+        assertEquals(2, result.size());
+        assertFalse(result.get(0).isCorrect());
+        assertFalse(result.get(1).isCorrect());
+        verify(flashcardRepository).findAll();
+        verify(flashcardRepository).saveAll(anyList());
+    }
+    // helper method to create a flashcard with a specific id, question, answer and isCorrect value
+    private Flashcard createFlashcard(String id, String question, String answer, boolean isCorrect) {
+        Flashcard flashcard = new Flashcard(question, answer);
+        flashcard.setId(id);
+        flashcard.setCorrect(isCorrect);
+        return flashcard;
+    }
 }

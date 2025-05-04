@@ -13,6 +13,7 @@ import {
   Typography,
   SelectChangeEvent,
 } from '@mui/material';
+import {useNavigate} from "react-router-dom";
 
 interface FlashcardData {
   id: string;
@@ -28,6 +29,7 @@ const Generate = () => {
   const [loading, setLoading] = useState(false);
   const [flashcards, setFlashcards] = useState<FlashcardData[]>([]);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,6 +68,9 @@ const Generate = () => {
     }
   };
 
+  const handlePracticeClick = () => {
+    navigate('/practice');
+  };
 
   const handleLanguageChange = (e: SelectChangeEvent) => {
     setLanguage(e.target.value);
@@ -135,11 +140,25 @@ const Generate = () => {
 
       {flashcards.length > 0 && (
         <Box sx={{ mt: 4 }}>
-          <Typography variant="h5" gutterBottom>
-            Generated Flashcards
-          </Typography>
-          <Box sx={{ 
-            display: 'flex', 
+          <Box sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            mb: 2
+          }}>
+            <Typography variant="h5">
+              Generated Flashcards
+            </Typography>
+            <Button
+                variant="contained"
+                color="secondary"
+                onClick={handlePracticeClick}
+            >
+              Switch to Practice Mode
+            </Button>
+          </Box>
+          <Box sx={{
+            display: 'flex',
             flexDirection: 'column',
             gap: 2
           }}>

@@ -134,7 +134,7 @@ public class APIService {
             JSONObject jsonResponse = new JSONObject(responseBody);
             JSONArray choices = jsonResponse.getJSONArray("choices");
             if (!choices.isEmpty()) {
-                String content = choices.getJSONObject(0).getJSONObject("message").getString("content");
+                String content = choices.getJSONObject(0).getJSONObject("message").getString(CONTENT);
                 String jsonArrayString = extractJsonArray(content);
                 JSONArray flashcardArray = new JSONArray(jsonArrayString);
                 for (int i = 0; i < flashcardArray.length(); i++) {

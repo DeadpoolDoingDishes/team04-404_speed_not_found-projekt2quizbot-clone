@@ -62,17 +62,6 @@ public class FlashcardService {
     }
 
     /**
-     * Calculates the number of flashcards that have been marked as correct.
-     *
-     * @return the number of correct flashcards
-     */
-    public int calculatePoints() {
-        return (int) repository.findAll().stream()
-                .filter(Flashcard::isCorrect)
-                .count();
-    }
-
-    /**
      * Resets the correctness flag of all flashcards to false.
      *
      * @return a list of all flashcards after being reset

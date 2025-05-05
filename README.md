@@ -37,10 +37,12 @@ ___________________________________________________________________
 
 # Running the application locally
 ## run both (with npm install)
+in project root folder:
 ```gradle wrapper```
 ```./gradlew installAndStartAll```
 
 ## run both (without npm install)
+in project root folder:
 ```gradle wrapper```
 ```./gradlew startAll```
 

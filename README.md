@@ -39,12 +39,12 @@ ___________________________________________________________________
 ## run both (with npm install)
 in project root folder:
 ```gradle wrapper```
-```./gradlew installAndStartAll```
+```./gradlew installAndStartAll``` (could take up to 5 minutes)
 
 ## run both (without npm install)
 in project root folder:
 ```gradle wrapper```
-```./gradlew startAll```
+```./gradlew startAll``` (could take up to 3 minutes)
 
 ## alternatively run separately
 ### run backend

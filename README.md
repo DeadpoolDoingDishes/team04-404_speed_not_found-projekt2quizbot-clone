@@ -36,13 +36,22 @@
 ___________________________________________________________________
 
 # Running the application locally
-## run backend
+## run both (with npm install)
+```gradle wrapper```
+```./gradlew installAndStartAll```
+
+## run both (without npm install)
+```gradle wrapper```
+```./gradlew startAll```
+
+## alternatively run separately
+### run backend
 ```cd backend/```
 ```gradle wrapper```
 ```./gradlew build```
 ```./gradlew bootRun```
 
-## run frontend
+### run frontend
 ```cd frontend/quizbot```
 ```npm install```
 ```npm start```

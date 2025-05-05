@@ -40,10 +40,3 @@ node {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
-
-tasks.register("npmStart", NpmTask::class) {
-	group = "application"
-	description = "Startet das Frontend per npm start"
-	workingDir = file("../frontend/quizbot")
-	args.set(listOf("start"))
-}

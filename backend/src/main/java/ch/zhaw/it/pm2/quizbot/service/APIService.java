@@ -116,6 +116,7 @@ public class APIService {
      * @throws IOException if the HTTP request fails
      */
     private String sendRequest(JSONObject requestBody) throws IOException {
+        Request request = createAPIRequest(requestBody);
         try (Response response = httpClient.newCall(request).execute()) {
             if (response.isSuccessful() && response.body() != null) {
                 String responseBody = response.body().string();
@@ -128,6 +129,7 @@ public class APIService {
         }
         return null;
     }
+
 
     /**
      * Parses the response from the AIML API and extracts a list of flashcards.
